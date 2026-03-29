@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 env:
-  APP_PORT: 9001
+  APP_PORT: 9000
 
 jobs:
   deploy-staging:
@@ -47,7 +47,7 @@ jobs:
 
             set -e
 
-            APP_PORT=9001
+            APP_PORT=9000
             echo "🚀 Starting deployment to STAGING..."
             echo "📌 Using port: \$APP_PORT"
 
@@ -104,7 +104,7 @@ jobs:
 
       - name: Run Smoke Tests
         run: |
-          HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://${{ secrets.STAGING_VM_HOST }}:9001/health)
+          HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://${{ secrets.STAGING_VM_HOST }}:9000/health)
           if [ "$HTTP_STATUS" -eq 200 ]; then
             echo "✅ Health check passed"
           else
@@ -117,4 +117,4 @@ jobs:
           echo "## 🚀 Staging Deployment Complete" >> $GITHUB_STEP_SUMMARY
           echo "- **Environment:** Staging" >> $GITHUB_STEP_SUMMARY
           echo "- **VM:** ${{ secrets.STAGING_VM_HOST }}" >> $GITHUB_STEP_SUMMARY
-          echo "- **URL:** http://${{ secrets.STAGING_VM_HOST }}:9001" >> $GITHUB_STEP_SUMMARY
+          echo "- **URL:** http://${{ secrets.STAGING_VM_HOST }}:9000" >> $GITHUB_STEP_SUMMARY
